@@ -57,8 +57,9 @@ function main() {
                 startDiscover(showQR());
                 break;
             case 2:
-                let password = await r1.question(`Input your Pairing code:`);
-                startDiscover(password);
+                r1.question(`Input your Pairing code:`, code => {
+                    startDiscover(code); 
+                });
                 break;
         }
         rl.close();
