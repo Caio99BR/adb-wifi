@@ -1,13 +1,18 @@
 {
   "name": "adb-wifi2",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Pairing Device over Wi-Fi for Android Debugging",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "publish": "npm run publish"
   },
-  "keywords": ["Android", "adb", "Wi-Fi", "Pairing"],
+  "keywords": [
+    "Android",
+    "adb",
+    "Wi-Fi",
+    "Pairing"
+  ],
   "author": "wanix1988@gmail.com",
   "license": "ISC",
   "dependencies": {
