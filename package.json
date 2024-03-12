@@ -1,14 +1,14 @@
 {
-  "name": "adb-wifi",
-  "version": "0.1.2",
-  "description": "",
+  "name": "adb-wifi2",
+  "version": "0.1.3",
+  "description": "Pairing Device over Wi-Fi for Android Debugging",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "publish": "npm run publish"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["Android", "adb", "Wi-Fi", "Pairing"],
+  "author": "wanix1988@gmail.com",
   "license": "ISC",
   "dependencies": {
     "nanoid": "^3.3.1",
@@ -21,6 +21,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/saleehk/adb-wifi"
+    "url": "https://github.com/wanix1988/adb-wifi"
   }
 }
