@@ -9,15 +9,21 @@ This a cli tool which shows QR code and make seamless connection
 ## Install
 
 ```
-npm i adb-wifi -g 
+npm i adb-wifi2 -g 
 ```
 
 ## Usage
 
 ``` 
-adb-wifi
+adb-wifi2
 ```
 It'll show QR code and scan it from here 
+
+Or
+
+```
+npx adb-wifi2
+```
 
 
 1. Go to Developer options from settings 
