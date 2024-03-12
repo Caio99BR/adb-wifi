@@ -8,11 +8,18 @@ var qrcode = require('qrcode-terminal');
 const { nanoid } = require('nanoid');
 const name = 'ADB_WIFI_' + nanoid();
 
+// some ADB version disable mDNS, reopen it
+async function init() {
+	await exec(`ADB_MDNS_OPENSCREEN=1; adb mdns check; adb kill-server; adb start-server`);
+}
+
+init();
+
 function showQR() {
     let password = nanoid();
     const text = `WIFI:T:ADB;S:${name};P:${password};;`;
     qrcode.generate(text, { small: true });
-    return password;
+    return { code: password };
 }
 
 function getDevice(service) {
@@ -24,7 +31,7 @@ function getDevice(service) {
 
 function connect({address, port}, password) {
 	console.log('connect to device...');
-    exec(`adb pair ${address}:${port} ${password}`, (error, stdout, stderr) => {
+    exec(`adb pair ${address}:${port} ${password.code}`, (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
             return;
@@ -42,7 +49,7 @@ async function startDiscover(password) {
         name: '_adb-tls-pairing._tcp.local'
     });
     if (device_list.length === 0)
-        return await startDiscover();
+        return await startDiscover(password);
     const item = getDevice(device_list[0]);
     connect(item, password);            
 }
