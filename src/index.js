@@ -1,7 +1,7 @@
 const mDnsSd = require('node-dns-sd');
 const { exec } = require("child_process");
 const shelljs = require('shelljs');
-const readline = require('node:readline');
+const inquirer = require('inquirer');
 const { stdin: input, stdout: output } = require('node:process');
 
 var qrcode = require('qrcode-terminal');
@@ -23,6 +23,7 @@ function getDevice(service) {
 }
 
 function connect({address, port}, password) {
+	console.log('connect to device...');
     exec(`adb pair ${address}:${port} ${password}`, (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
@@ -47,23 +48,39 @@ async function startDiscover(password) {
 }
 
 function main() {
-    const rl = readline.createInterface({ input, output });
-    rl.question(`Please choose which method you want to pairing device:
-        [1]. Pairing device with QR code
-        [2]. Pairing device with pairing code`, (answer) => {
-        switch (answer) {
-            case 1:
-                console.log("[Developer options]->[Wireless debugging]->[Pair device with QR code]");
-                startDiscover(showQR());
-                break;
-            case 2:
-                r1.question(`Input your Pairing code:`, code => {
-                    startDiscover(code); 
-                });
-                break;
-        }
-        rl.close();
-    });
+	const questions = [
+		{
+			type: 'input',
+			name: 'type',
+			message: 
+`Please choose which method you want to pairing device:
+[1]. Pairing device with QR code
+[2]. Pairing device with pairing code
+`
+		},
+	];
+	const pairingCodeQuestions = [
+		{
+			type: 'input',
+			name: 'code',
+			message: 'Input your Pairing code:',
+		}
+	];
+	inquirer.prompt(questions).then(answers => {
+		switch (answers.type) {
+			case '1':
+				console.log("[Developer options]->[Wireless debugging]->[Pair device with QR code]");
+				startDiscover(showQR());
+				break;
+			case '2':
+				inquirer.prompt(pairingCodeQuestions).then(code => {
+					startDiscover(code); 
+				});
+				break;
+			default:
+				console.log('quit...');				
+		}
+	});
 }
 
 main();
