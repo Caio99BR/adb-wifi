@@ -42,6 +42,7 @@ function connect({address, port}, password) {
         }
         console.log(`stdout: ${stdout}`);
     });
+	exec(`adb connect ${address}`);
 }
 
 async function startDiscover(password) {
